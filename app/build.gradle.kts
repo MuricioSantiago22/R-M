@@ -83,6 +83,10 @@ dependencies {
     implementation ("androidx.navigation:navigation-compose:2.6.0")
     implementation ("androidx.compose.runtime:runtime-livedata:1.4.3")
 
+    // Paging Compose
+    implementation ("androidx.paging:paging-compose:1.0.0-alpha20")
+    implementation("androidx.paging:paging-runtime:3.2.0-alpha06")
+
     //Images
     implementation ("io.coil-kt:coil-compose:2.2.2")
 }

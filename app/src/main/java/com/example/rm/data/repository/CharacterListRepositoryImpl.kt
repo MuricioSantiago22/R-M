@@ -1,6 +1,5 @@
 package com.example.rm.data.repository
 
-import com.example.rm.data.remote.entities.dto.CharacterDto
 import com.example.rm.data.remote.mapper.toDomain
 import com.example.rm.data.remote.network.RMApiClient
 import com.example.rm.domain.entities.Character
