@@ -10,6 +10,6 @@ class CharacterListRepositoryImpl @Inject constructor(
     private val client:RMApiClient
 ):CharacterListRepository {
     override suspend fun getCharacterList(pageNumber: Int): List<Character> =
-       client.getCharacters(pageNumber).body()!!.result.map { it!!.toDomain() }
+       client.getCharacters(pageNumber).result.map { it!!.toDomain() }
 
 }

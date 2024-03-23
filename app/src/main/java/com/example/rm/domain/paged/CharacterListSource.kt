@@ -15,13 +15,13 @@ class CharacterListSource@Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
         return try{
-            val pageNumber = params.key ?: 0
+            val pageNumber = params.key ?: 1
             val response = characterListRepository.getCharacterList(
                 pageNumber
             )
             LoadResult.Page(
                 data = response,
-                prevKey = if(pageNumber == 0) null else pageNumber + 1,
+                prevKey = if(pageNumber == 1) null else pageNumber - 1,
                 nextKey = if (response.isEmpty()) null else pageNumber + 1
             )
         }catch (e:Exception){
