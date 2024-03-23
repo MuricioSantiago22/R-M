@@ -12,7 +12,6 @@ class CharacterListSource@Inject constructor(
     override fun getRefreshKey(state: PagingState<Int, Character>): Int? {
         return null
     }
-
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
         return try{
             val pageNumber = params.key ?: 1
