@@ -1,7 +1,8 @@
 package com.example.rm.data.repository
 
 import com.example.rm.data.local.dao.CharacterDao
-import com.example.rm.data.remote.mapper.toDomain
+import com.example.rm.data.local.mapper.toDomain
+import com.example.rm.data.remote.mapper.toEntity
 import com.example.rm.data.remote.network.RMApiClient
 import com.example.rm.domain.entities.Character
 import com.example.rm.domain.repository.CharacterListRepository
@@ -11,8 +12,10 @@ class CharacterListRepositoryImpl @Inject constructor(
     private val client:RMApiClient,
     private val characterDao: CharacterDao
 ):CharacterListRepository {
-    override suspend fun getCharacterList(pageNumber: Int): List<Character> =
-       client.getCharacters(pageNumber).result.map { it!!.toDomain()}
-
-
+    override suspend fun getCharacterList(pageNumber: Int): List<Character> {
+        val characterResponse = client.getCharacters(pageNumber).result
+        val characterEntities = characterResponse.mapNotNull { it?.toEntity() }
+        characterDao.insertCharacterList(characterEntities)
+        return characterEntities.map { it.toDomain() }
+    }
 }

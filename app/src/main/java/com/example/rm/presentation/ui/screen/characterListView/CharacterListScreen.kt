@@ -81,7 +81,12 @@ fun CharacterList(
         LazyColumn {
             items(lazyProductItems) { character ->
                 ProductItem(
-                    character = character ?: Character(name = "", image = ""),
+                    character = character ?:
+                    Character(
+                        id= 0,
+                        name = "",
+                        image = ""
+                    ),
                     navController
                 )
             }
