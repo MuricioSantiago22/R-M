@@ -4,6 +4,7 @@ import com.example.rm.domain.entities.Character
 
 interface CharacterListRepository {
     suspend fun getCharacterList(
-        pageNumber:Int
+        pageNumber:Int,
+        searchString: String
     ):List<Character>
 }

@@ -12,8 +12,8 @@ class CharacterListRepositoryImpl @Inject constructor(
     private val client:RMApiClient,
     private val characterDao: CharacterDao
 ):CharacterListRepository {
-    override suspend fun getCharacterList(pageNumber: Int): List<Character> {
-        val characterResponse = client.getCharacters(pageNumber).result
+    override suspend fun getCharacterList(pageNumber: Int, searchString: String): List<Character> {
+        val characterResponse = client.getCharacters(pageNumber, searchString).result
         val characterEntities = characterResponse.mapNotNull { it?.toEntity() }
         characterDao.insertCharacterList(characterEntities)
         return characterEntities.map { it.toDomain() }

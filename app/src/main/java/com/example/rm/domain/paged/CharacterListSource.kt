@@ -9,6 +9,12 @@ import javax.inject.Inject
 class CharacterListSource@Inject constructor(
     private val characterListRepository: CharacterListRepository
 ): PagingSource<Int, Character>() {
+
+    private var currentQuery: String? = null
+
+    fun setQuery(query: String) {
+        currentQuery = query
+    }
     override fun getRefreshKey(state: PagingState<Int, Character>): Int? {
         return null
     }
@@ -16,7 +22,8 @@ class CharacterListSource@Inject constructor(
         return try{
             val pageNumber = params.key ?: 1
             val response = characterListRepository.getCharacterList(
-                pageNumber
+                pageNumber,
+                currentQuery ?: ""
             )
             LoadResult.Page(
                 data = response,

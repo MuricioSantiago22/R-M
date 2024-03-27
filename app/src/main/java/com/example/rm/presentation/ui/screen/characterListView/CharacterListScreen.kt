@@ -58,6 +58,7 @@ fun CharacterListScreen(
                 .padding(paddingValues)
                 .fillMaxWidth()
         ) {
+            SearchBarCharacters(viewModel = viewModel)
             CharacterList(
                 characters = viewModel.characters,
                 modifier = Modifier.fillMaxWidth(),
