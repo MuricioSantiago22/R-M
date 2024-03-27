@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -28,7 +29,9 @@ import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CharacterListScreen(){
+fun CharacterListScreen(
+    navController: NavController
+){
     val viewModel: CharacterListViewModel = hiltViewModel()
     val topAppBarTextStyle = MaterialTheme.typography.headlineSmall
         .copy(fontWeight = FontWeight.Bold)
@@ -57,14 +60,19 @@ fun CharacterListScreen(){
         ) {
             CharacterList(
                 characters = viewModel.characters,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                navController
             )
         }
     }
 }
 
 @Composable
-fun CharacterList(characters: Flow<PagingData<Character>>, modifier: Modifier = Modifier) {
+fun CharacterList(
+    characters: Flow<PagingData<Character>>,
+    modifier: Modifier = Modifier,
+    navController: NavController
+) {
     val lazyProductItems = characters.collectAsLazyPagingItems()
 
     Box(
@@ -73,7 +81,8 @@ fun CharacterList(characters: Flow<PagingData<Character>>, modifier: Modifier = 
         LazyColumn {
             items(lazyProductItems) { character ->
                 ProductItem(
-                    character = character ?: Character(name = "", image = "")
+                    character = character ?: Character(name = "", image = ""),
+                    navController
                 )
             }
         }

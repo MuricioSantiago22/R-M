@@ -1,6 +1,7 @@
 package com.example.rm.presentation.ui.screen.characterListView
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,14 +17,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.rm.domain.entities.Character
+import com.example.rm.presentation.navigation.Routes
 
 @Composable
-fun ProductItem(character: Character){
+fun ProductItem(
+    character: Character,
+    navController: NavController
+){
     Row(
         modifier = Modifier
             .padding(8.dp)
+            .clickable {
+                navController.navigate(
+                    route = Routes.CharacterDetailScreen.route
+                )
+            }
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
