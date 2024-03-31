@@ -28,7 +28,6 @@ class CharacterListViewModel@Inject constructor(
             }.flow
         }
 
-
     fun setQuery(query:String){
         _searchQuery.value = query
         characterListSource.setQuery(query)

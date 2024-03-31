@@ -24,13 +24,15 @@ import com.example.rm.presentation.ui.screen.stateView.ErrorItem
 import com.example.rm.presentation.ui.screen.stateView.LoadingItem
 import com.example.rm.presentation.ui.screen.stateView.LoadingView
 import com.example.rm.presentation.viewModel.CharacterListViewModel
+import com.example.rm.presentation.viewModel.SharedViewModel
 import kotlinx.coroutines.flow.Flow
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CharacterListScreen(
-    navController: NavController
+    navController: NavController,
+    sharedViewModel: SharedViewModel
 ){
     val viewModel: CharacterListViewModel = hiltViewModel()
     val topAppBarTextStyle = MaterialTheme.typography.headlineSmall
@@ -58,11 +60,14 @@ fun CharacterListScreen(
                 .padding(paddingValues)
                 .fillMaxWidth()
         ) {
-            SearchBarCharacters(viewModel = viewModel)
+            SearchBarCharacters(
+                viewModel = viewModel
+            )
             CharacterList(
                 characters = viewModel.characters,
                 modifier = Modifier.fillMaxWidth(),
-                navController
+                navController,
+                sharedViewModel
             )
         }
     }
@@ -72,7 +77,8 @@ fun CharacterListScreen(
 fun CharacterList(
     characters: Flow<PagingData<Character>>,
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    sharedViewModel: SharedViewModel
 ) {
     val lazyProductItems = characters.collectAsLazyPagingItems()
 
@@ -81,14 +87,8 @@ fun CharacterList(
     ) {
         LazyColumn {
             items(lazyProductItems) { character ->
-                ProductItem(
-                    character = character ?:
-                    Character(
-                        id= 0,
-                        name = "",
-                        image = ""
-                    ),
-                    navController
+                ProductItem( sharedViewModel = sharedViewModel,
+                    navController, character!!
                 )
             }
         }

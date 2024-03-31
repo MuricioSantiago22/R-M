@@ -21,16 +21,19 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.rm.domain.entities.Character
 import com.example.rm.presentation.navigation.Routes
+import com.example.rm.presentation.viewModel.SharedViewModel
 
 @Composable
 fun ProductItem(
-    character: Character,
-    navController: NavController
+    sharedViewModel: SharedViewModel,
+    navController: NavController,
+    character: Character
 ){
     Row(
         modifier = Modifier
             .padding(8.dp)
             .clickable {
+                sharedViewModel.addCharacter(character)
                 navController.navigate(
                     route = Routes.CharacterDetailScreen.route
                 )
