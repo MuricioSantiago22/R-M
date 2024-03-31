@@ -1,5 +1,4 @@
 package com.example.rm.domain.paged
-
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.rm.domain.entities.Character
@@ -28,7 +27,7 @@ class CharacterListSource@Inject constructor(
             LoadResult.Page(
                 data = response,
                 prevKey = if(pageNumber == 1) null else pageNumber - 1,
-                nextKey = if (response.isEmpty()) pageNumber + 1 else null
+                nextKey = if (response.isEmpty())  null else pageNumber + 1
             )
         }catch (e:Exception){
             LoadResult.Error(e)
