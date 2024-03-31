@@ -53,7 +53,7 @@ fun ErrorItem(
     onClickRetry: () -> Unit
 ) {
     Row(
-        modifier = modifier.fillMaxSize().padding(16.dp).background(Color.White),
+        modifier = modifier.fillMaxSize().background(Color.White),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -73,7 +73,7 @@ fun ErrorItem(
             OutlinedButton(
                 onClick = onClickRetry
             ) {
-                Text(text = "Intenta de nuevo")
+                Text(text = "Try again")
             }
         }
     }

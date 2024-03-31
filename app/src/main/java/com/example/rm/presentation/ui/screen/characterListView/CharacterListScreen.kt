@@ -32,7 +32,8 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun CharacterListScreen(
     navController: NavController,
-    sharedViewModel: SharedViewModel
+    sharedViewModel: SharedViewModel,
+
 ){
     val viewModel: CharacterListViewModel = hiltViewModel()
     val topAppBarTextStyle = MaterialTheme.typography.headlineSmall
@@ -42,7 +43,7 @@ fun CharacterListScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Personajes",
+                        text = "Characters",
                         textAlign = TextAlign.Center,
                         style = topAppBarTextStyle,
                         modifier = Modifier.fillMaxWidth()

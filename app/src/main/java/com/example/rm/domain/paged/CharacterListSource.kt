@@ -28,7 +28,7 @@ class CharacterListSource@Inject constructor(
             LoadResult.Page(
                 data = response,
                 prevKey = if(pageNumber == 1) null else pageNumber - 1,
-                nextKey = if (response.isEmpty()) null else pageNumber + 1
+                nextKey = if (response.isEmpty()) pageNumber + 1 else null
             )
         }catch (e:Exception){
             LoadResult.Error(e)

@@ -16,11 +16,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             RMTheme {
                 MyActivityUi()
+
             }
         }
     }
 }
-    @Composable
-    fun MyActivityUi(){
-        AppNavigation()
-    }
+@Composable
+fun MyActivityUi(){
+    AppNavigation()
+}
