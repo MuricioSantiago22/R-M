@@ -1,6 +1,5 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 package com.example.rm.presentation.ui.screen.characterListView
-
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
@@ -20,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.rm.presentation.viewModel.CharacterListViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBarCharacters(viewModel:CharacterListViewModel){
     Surface(
@@ -46,7 +46,7 @@ fun SearchBarCharacters(viewModel:CharacterListViewModel){
             modifier= Modifier.wrapContentHeight(),
             placeholder = {
                 Text(
-                    text = "Buscar por nombre"
+                    text = "Search by name"
                 )
             },
             leadingIcon = {

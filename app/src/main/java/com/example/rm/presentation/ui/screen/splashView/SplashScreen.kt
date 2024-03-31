@@ -41,7 +41,7 @@ fun Splash(){
             painter = painterResource(id = R.drawable.rickandmorty),
             contentDescription = "Logo",
             Modifier.size(400.dp, 400.dp))
-        Text("Bienvenid@s",
+        Text("Welcome",
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold)
     }
