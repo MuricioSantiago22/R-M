@@ -59,7 +59,7 @@ fun CharacterDetailScreen(
             ),
             navigationIcon = {
                 IconButton(onClick = {navController.popBackStack()}) {
-                    Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back" )
+                    Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back" , tint = Color.White)
                 }
             }
         )

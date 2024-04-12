@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -46,7 +47,9 @@ fun CharacterListScreen(
     val topAppBarTextStyle = MaterialTheme.typography.headlineSmall
         .copy(fontWeight = FontWeight.Bold)
     val listState = rememberLazyListState()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
                 title = {
@@ -61,7 +64,8 @@ fun CharacterListScreen(
                     containerColor = Color.Green,
                     titleContentColor = Color.White,
                     actionIconContentColor = Color.White
-                )
+                ),
+                scrollBehavior = scrollBehavior
             )}
     ) {paddingValues ->
         Column(
@@ -69,9 +73,16 @@ fun CharacterListScreen(
                 .padding(paddingValues)
                 .fillMaxWidth()
         ) {
-            SearchBarCharacters(
-                viewModel = viewModel
-            )
+            AnimatedVisibility(
+                visible = listState.isScrollingUp(),
+                enter = fadeIn(),
+                exit = fadeOut()
+            ){
+                SearchBarCharacters(
+                    viewModel = viewModel
+                )
+            }
+
             CharacterList(
                 characters = viewModel.characters,
                 modifier = Modifier.fillMaxWidth(),
@@ -117,14 +128,6 @@ fun CharacterList(
             }
             lazyProductItems.loadState.refresh is LoadState.Error -> {
                 val e = lazyProductItems.loadState.refresh as LoadState.Error
-                ErrorItem(
-                    message = e.error.localizedMessage ?: "",
-                    modifier = Modifier.fillMaxSize(),
-                    onClickRetry = { lazyProductItems.retry() }
-                )
-            }
-            lazyProductItems.loadState.append is LoadState.Error -> {
-                val e = lazyProductItems.loadState.append as LoadState.Error
                 ErrorItem(
                     message = e.error.localizedMessage ?: "",
                     modifier = Modifier.fillMaxSize(),
