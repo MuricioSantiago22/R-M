@@ -1,7 +1,12 @@
 package com.example.rm.presentation.ui.screen.characterListView
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -9,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -26,6 +32,7 @@ import com.example.rm.presentation.ui.screen.stateView.LoadingView
 import com.example.rm.presentation.viewModel.CharacterListViewModel
 import com.example.rm.presentation.viewModel.SharedViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,6 +45,7 @@ fun CharacterListScreen(
     val viewModel: CharacterListViewModel = hiltViewModel()
     val topAppBarTextStyle = MaterialTheme.typography.headlineSmall
         .copy(fontWeight = FontWeight.Bold)
+    val listState = rememberLazyListState()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -68,8 +76,10 @@ fun CharacterListScreen(
                 characters = viewModel.characters,
                 modifier = Modifier.fillMaxWidth(),
                 navController,
-                sharedViewModel
+                sharedViewModel,
+                listState
             )
+
         }
     }
 }
@@ -79,17 +89,20 @@ fun CharacterList(
     characters: Flow<PagingData<Character>>,
     modifier: Modifier = Modifier,
     navController: NavController,
-    sharedViewModel: SharedViewModel
+    sharedViewModel: SharedViewModel,
+    listState: LazyListState = rememberLazyListState()
 ) {
     val lazyProductItems = characters.collectAsLazyPagingItems()
-
+    val coroutineScope = rememberCoroutineScope()
     Box(
         modifier = modifier.fillMaxSize()
     ) {
-        LazyColumn {
+        LazyColumn( state = listState ) {
             items(lazyProductItems) { character ->
-                ProductItem( sharedViewModel = sharedViewModel,
-                    navController, character!!
+                ProductItem(
+                    sharedViewModel = sharedViewModel,
+                    navController,
+                    character!!
                 )
             }
         }
@@ -117,6 +130,17 @@ fun CharacterList(
                     modifier = Modifier.fillMaxSize(),
                     onClickRetry = { lazyProductItems.retry() }
                 )
+            }
+        }
+        AnimatedVisibility(
+            visible = !listState.isScrollingUp(),
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            GoToTop {
+                coroutineScope.launch {
+                    listState.scrollToItem(0)
+                }
             }
         }
     }

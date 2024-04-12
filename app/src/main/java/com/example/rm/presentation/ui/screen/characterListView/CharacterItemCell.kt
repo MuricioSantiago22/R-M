@@ -32,12 +32,6 @@ fun ProductItem(
     Row(
         modifier = Modifier
             .padding(8.dp)
-            .clickable {
-                sharedViewModel.addCharacter(character)
-                navController.navigate(
-                    route = Routes.CharacterDetailScreen.route
-                )
-            }
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -50,6 +44,12 @@ fun ProductItem(
                 .size(200.dp)
                 .background(Color.White.copy(alpha = 0.1f))
                 .padding(8.dp)
+                .clickable {
+                    sharedViewModel.addCharacter(character)
+                    navController.navigate(
+                        route = Routes.CharacterDetailScreen.route
+                    )
+                }
         )
         Spacer(
             modifier = Modifier
