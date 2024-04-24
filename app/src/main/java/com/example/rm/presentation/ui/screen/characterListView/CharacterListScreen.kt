@@ -67,7 +67,21 @@ fun CharacterListScreen(
                 ),
                 scrollBehavior = scrollBehavior
             )}
-    ) {paddingValues ->
+    ){ paddingValues ->
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxWidth()
+        ) {
+
+            CharacterList(
+                characters = viewModel.characters,
+                modifier = Modifier.fillMaxWidth(),
+                navController,
+                sharedViewModel,
+                listState
+            )
+        }
         Column(
             modifier = Modifier
                 .padding(paddingValues)
@@ -79,18 +93,9 @@ fun CharacterListScreen(
                 exit = fadeOut()
             ){
                 SearchBarCharacters(
-                    viewModel = viewModel
+                    viewModel = viewModel,
                 )
             }
-
-            CharacterList(
-                characters = viewModel.characters,
-                modifier = Modifier.fillMaxWidth(),
-                navController,
-                sharedViewModel,
-                listState
-            )
-
         }
     }
 }

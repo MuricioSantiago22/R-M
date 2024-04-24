@@ -7,10 +7,12 @@ import androidx.paging.PagingData
 import com.example.rm.domain.entities.Character
 import com.example.rm.domain.paged.CharacterListSource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +27,7 @@ class CharacterListViewModel@Inject constructor(
         searchQuery.flatMapLatest { query ->
             Pager(PagingConfig(pageSize = 20)){
                 characterListSource
-            }.flow
+            }.flow.flowOn(Dispatchers.IO)
         }
 
     fun setQuery(query:String){

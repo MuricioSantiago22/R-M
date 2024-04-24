@@ -17,11 +17,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.example.rm.presentation.viewModel.CharacterListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBarCharacters(viewModel:CharacterListViewModel){
+fun SearchBarCharacters(
+    viewModel:CharacterListViewModel
+    ){
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.background

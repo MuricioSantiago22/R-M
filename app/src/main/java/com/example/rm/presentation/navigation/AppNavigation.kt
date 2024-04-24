@@ -12,14 +12,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.rm.presentation.ui.screen.characterDetailView.CharacterDetailScreen
 import com.example.rm.presentation.ui.screen.characterListView.CharacterListScreen
-import com.example.rm.presentation.ui.screen.dialogs.AlertDialogExit
-import com.example.rm.presentation.ui.screen.dialogs.currentRoute
+import com.example.rm.presentation.ui.dialogs.AlertDialogExit
+import com.example.rm.presentation.ui.dialogs.currentRoute
 import com.example.rm.presentation.ui.screen.splashView.SplashScreen
 import com.example.rm.presentation.viewModel.SharedViewModel
 
-
 @Composable
 fun AppNavigation(){
+
     val navController = rememberNavController()
     val sharedViewModel: SharedViewModel = viewModel()
     val openDialog = remember { mutableStateOf(false) }
@@ -27,7 +27,8 @@ fun AppNavigation(){
     BackHandler(enabled = (currentRoute(navController) ==Routes.CharacterLisScreen.route)) {
         openDialog.value = true
     }
-    NavHost(navController = navController, startDestination = Routes.SplashScreen.route ) {
+    NavHost(
+        navController = navController, startDestination = Routes.SplashScreen.route ) {
         composable(route = Routes.SplashScreen.route){
             SplashScreen(
                 navController = navController
@@ -51,11 +52,9 @@ fun AppNavigation(){
         composable(
             route= Routes.CharacterDetailScreen.route
         ){
-
             CharacterDetailScreen(
                 navController = navController,
                 sharedViewModel
-
             )
         }
     }

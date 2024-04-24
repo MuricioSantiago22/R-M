@@ -1,4 +1,4 @@
-package com.example.rm.presentation.ui.screen.dialogs
+package com.example.rm.presentation.ui.dialogs
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text

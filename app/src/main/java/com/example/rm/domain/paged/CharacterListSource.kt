@@ -3,6 +3,8 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.rm.domain.entities.Character
 import com.example.rm.domain.repository.CharacterListRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CharacterListSource@Inject constructor(
@@ -18,7 +20,7 @@ class CharacterListSource@Inject constructor(
         return null
     }
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
-        return try{
+        return withContext(Dispatchers.IO) { try{
             val pageNumber = params.key ?: 1
             val response = characterListRepository.getCharacterList(
                 pageNumber,
@@ -32,5 +34,6 @@ class CharacterListSource@Inject constructor(
         }catch (e:Exception){
             LoadResult.Error(e)
         }
+    }
     }
 }

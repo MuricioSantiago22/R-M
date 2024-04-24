@@ -9,6 +9,8 @@ import com.example.rm.data.local.entities.CharacterEntity
 @Dao
 interface CharacterDao {
 
+    @Query("SELECT * FROM character_table")
+    fun getAllCharacters(): List<CharacterEntity>
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCharacterList(list:List<CharacterEntity>)
 
